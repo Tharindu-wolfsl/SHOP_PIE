@@ -1,0 +1,32 @@
+[{
+	"name":"T-shirt",
+	"price":5000,
+	"description":"Latest style",
+	"ratings":4.2,
+	"category":"Clothes/Shoes",
+	"seller":"Ebay",
+	"stock":50,
+	"reviews":[]
+},
+{
+	"name":"iphone 7s",
+	"price":45000,
+	"description":"This latest version of iphone",
+	"ratings":4.5,
+	"category":"Electronics",
+	"seller":"Tharindu",
+	"stock":500,
+	"reviews":[]
+},
+{
+	"name":"Cricket ball",
+	"price":900,
+	"description":"Best cricket ball brand",
+	"ratings":4.5,
+	"category":"Sports",
+	"seller":"Amazon",
+	"stock":20,
+	"reviews":[]
+}
+
+]

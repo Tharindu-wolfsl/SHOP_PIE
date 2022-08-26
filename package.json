@@ -1,0 +1,22 @@
+{
+  "name": "shoppie",
+  "version": "1.0.0",
+  "description": "Ecommerce site",
+  "main": "index.js",
+  "scripts": {
+    "start": "node backend/server.js",
+    "dev": "nodemon backend/server.js",
+    "prod": "SET NODE_ENV=PRODUCTION& nodemon backend/server.js",
+    "seed":"node backend/utils/seeder.js"
+  },
+  "author": "WOLFSL",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "mongoose": "^6.5.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.19"
+  }
+}
