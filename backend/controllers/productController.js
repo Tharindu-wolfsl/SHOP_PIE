@@ -1,10 +1,11 @@
 
 const Product=require('../models/product')
 const ErrorHandler=require('../utils/errorHandler')
+const handleAsyncErrors=require('../middlewares/catchAsyncErrors')
 
 //create new product => /api/v1/product/new
 
-exports.newProduct=async (req,res,next)=>{
+exports.newProduct=handleAsyncErrors(async (req,res,next)=>{
 
     const product=await Product.create(req.body);
 
@@ -15,10 +16,10 @@ exports.newProduct=async (req,res,next)=>{
 
     })
 
-}
+})
 //get all products => /api/v1/products
 
-exports.getProduct=async (req,res, next)=>{
+exports.getProduct=handleAsyncErrors( async (req,res, next)=>{
 
 
     const products=await Product.find();
@@ -30,14 +31,14 @@ exports.getProduct=async (req,res, next)=>{
         products
     })
 
-}
+})
 
 
 
 //get specific single product => /api/v1/products/:id
 
 
-exports.getSingleProduct=async (req,res,next)=>{
+exports.getSingleProduct=handleAsyncErrors( async (req,res,next)=>{
 
     const product=await Product.findById(req.params.id)
 
@@ -52,21 +53,16 @@ exports.getSingleProduct=async (req,res,next)=>{
 
     })
 
-}
+})
 
 
 //update products => /api/v1/admin/products/:id
 
-exports.updateProduct=async (req,res,next)=>{
+exports.updateProduct=handleAsyncErrors( async (req,res,next)=>{
 
     let product=await Product.findById(req.params.id);
     if(!product){
-        return res.status(404).json({
-
-        success:false,
-        message:"Product not found"
-
-        })
+        return next(new ErrorHandler('Product not found!',404));
     }
 
     product=await Product.findByIdAndUpdate(req.params.id,req.body,{
@@ -84,19 +80,14 @@ exports.updateProduct=async (req,res,next)=>{
 
     })
 
-}
+})
 
-exports.deleteProduct=async (req,res,next)=>{
+exports.deleteProduct=handleAsyncErrors( async (req,res,next)=>{
 
     const product=await Product.findById(req.params.id)
 
     if(!product){
-        return res.status(404).json({
-
-        success:false,
-        message:"Product not found"
-
-        })
+        return next(new ErrorHandler('Product not found!',404));
     }
 
     await product.remove();
@@ -108,4 +99,4 @@ exports.deleteProduct=async (req,res,next)=>{
     })
 
 
-}
+})
