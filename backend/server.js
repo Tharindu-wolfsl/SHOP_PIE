@@ -2,6 +2,22 @@ const app=require('./app')
 const dotenv=require('dotenv')
 const database=require('./config/database')
 
+
+
+//handle uncaught exceptions
+
+process.on('uncaughtException',err=>{
+
+    console.log(`Error: ${err.message}`)
+    console.log(`Error due to uncaught exception!`)
+
+    process.exit(1)
+
+})
+
+//console.log(a)
+
+
 //configure dotenv file
 
 dotenv.config({path:'backend/config/config.env'})
