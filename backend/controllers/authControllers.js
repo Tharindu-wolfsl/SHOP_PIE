@@ -5,6 +5,7 @@ const sendToken = require('../utils/jwtToken')
 const catchAsyncErrors = require('../middlewares/catchAsyncErrors')
 const sendEmail=require('../utils/sendEmail')
 const crypto=require('crypto')
+const ErrorHanlder = require('../utils/errorHandler')
 
 
 exports.registerUser=handleAsyncErrors( async (req,res,next)=>{
@@ -22,7 +23,7 @@ exports.registerUser=handleAsyncErrors( async (req,res,next)=>{
 
     })
 
-    
+
     // const token=user.getJwtToken()
    
     sendToken(user,200,res)
@@ -192,6 +193,75 @@ exports.resetPassword = handleAsyncErrors(async (req, res, next) => {
 
 })
 
+//current user details in api/v1/me
+
+exports.getCurrentUser = handleAsyncErrors(async (req, res, next) => {
+
+    const user = await User.findById(req.User.id)
+
+    res.status(200).json({
+        success:true,
+        user
+
+    })
+})
+
+
+//update password
+
+exports.updatePassword=handleAsyncErrors(async (req, res, next) => {
+
+    //check user
+    const user=await User.findById(req.User.id).select('+password');
+
+    //check with old password
+
+    const isMatch=await user.comparePassword(req.body.oldPassword)
+
+    if(!isMatch){
+        return next(new ErrorHandler(`Old password not correct!`,400))
+    }
+
+    user.password=req.body.password;
+
+    await user.save()
+
+    sendToken(user,200,res)
+
+})
+
+
+//update user profile
+
+exports.updateUserProfile=handleAsyncErrors(async (req, res, next) => {
+
+    //Get new profile data
+
+    const newContent={
+        name: req.body.name,
+        email:req.body.email
+    }
+
+    //update user
+    const user=await User.findByIdAndUpdate(req.User.id,newContent, {
+        new: true,
+        runValidators:true,
+        useFindAndModify:false
+
+    })
+
+    //send token
+
+    res.status(200).json({
+
+        success:true,
+
+    })
+
+
+})
+
+
 //logout user in api/v1/logout
 
 
@@ -210,5 +280,94 @@ exports.logoutUser = handleAsyncErrors(async (req,res,next)=>{
 
 })
 
+//Get all users aadmin in api/v1/admin/users
 
+exports.getAllUsers = handleAsyncErrors(async (req, res,next) => {
+
+    //Get alll users
+
+    const user=await User.find()
+
+    res.status(200).json({
+        success:true,
+        user
+    })
+})
+
+
+//get sepcific user in api/v1/admin/user:id
+
+exports.getUser = handleAsyncErrors(async (req, res,next) => {
+
+    //Get alll users
+
+    const user=await User.findById(req.params.id)
+
+    if(!user){
+
+        return next(new ErrorHanlder('User not exist!',404))
+    }
+    res.status(200).json({
+
+        success:true,
+        user
+    })
+})
+
+
+//update specific user in api/v1/admin/user/:id
+exports.updateUser=handleAsyncErrors(async (req, res, next) => {
+
+    //Get new profile data
+
+    const newContent={
+        name: req.body.name,
+        email:req.body.email,
+        role:req.body.role
+    }
+
+    //update user
+    const user=await User.findByIdAndUpdate(req.params.id,newContent, {
+        new: true,
+        runValidators:true,
+        useFindAndModify:false
+
+    })
+    if(!user){
+        return next(new ErrorHanlder('User not exist!',404))
+    }
+    //send token
+
+    res.status(200).json({
+
+        success:true,
+        message: 'User updated!',
+        user
+
+    })
+
+
+})
+//delete user api/v1/admin/user/delete
+exports.deleteUser = handleAsyncErrors(async (req, res,next) => {
+
+    //Get alll users
+
+    const user=await User.findById(req.params.id)
+
+    if(!user){
+
+        return next(new ErrorHanlder('User not exist!',404))
+    }
+
+
+    await user.remove()
+
+    res.status(200).json({
+
+        success:true,
+        message: 'User deleted!',
+        
+    })
+})
 
