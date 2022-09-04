@@ -1,4 +1,4 @@
-const errorHanlder=require('../utils/errorHandler')
+const ErrorHanlder=require('../utils/errorHandler')
 
 
 module.exports=(err,req,res,next)=>{
@@ -9,17 +9,40 @@ module.exports=(err,req,res,next)=>{
     if(err.name==="CastError"){
 
         const message=`Resource not found : invalid ${err.path}`
-        err=new errorHanlder(message,400)
+        err=new ErrorHanlder(message,400)
 
     }
 
     //Validate mongoose validation error
 
-    if(err.name="ValidationError"){
+    if(err.name==="ValidationError"){
 
         const message=Object.values(err.errors).map(value=>value.message);
-        err=new errorHanlder(message,400)
+        err=new ErrorHanlder(message,400)
     }
+
+    //handle duplicate key error
+
+    if(err.code===11000){
+
+        const message=`Duplicate ${Object.keys(err.keyValue)} entered`
+        err=new ErrorHanlder(message,400)
+    }
+    //handle wrong JWT token error
+    if(err.name==="JsonWebTokenError"){
+
+        const message=`Invlid JWT token! please try again!!`
+        err=new ErrorHanlder(message,400)
+    }
+
+    //handle expired JWT token error
+    if(err.name==="TokenExpiredError"){
+
+        const message=`Expired JWT token! please try again!!`
+        err=new ErrorHanlder(message,400)
+    }
+    
+
 
     if(process.env.NODE_ENV==='DEVELOPMENT'){
 

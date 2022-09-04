@@ -3,16 +3,20 @@ const Product=require('../models/product')
 const ErrorHandler=require('../utils/errorHandler')
 const handleAsyncErrors=require('../middlewares/catchAsyncErrors')
 const APIFeatures=require('../utils/apiFeatures')
+const User=require('../models/user')
 
 //create new product => /api/v1/product/new
 
 exports.newProduct=handleAsyncErrors(async (req,res,next)=>{
 
+
+    req.body.user=req.User.id;
+
     const product=await Product.create(req.body);
 
     res.status(201).json({
 
-        success:true,
+        success:true, 
         product
 
     })
