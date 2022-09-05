@@ -6,10 +6,12 @@ app.use(express.json())
 app.use(cookieParser())
 const products=require('./routes/product')
 const auths=require('./routes/auth')
+const order = require('./routes/order')
 
 
 app.use('/api/v1',products)
 app.use('/api/v1',auths)
+app.use('/api/v1',order)
 
 //middleware to handle errors
 app.use(errorMiddleware)
