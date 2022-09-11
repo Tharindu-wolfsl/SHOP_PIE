@@ -115,8 +115,9 @@ nav {
 
 /* Footer */
 footer {
+
   margin-top: 8rem;
-  color: grey;
+  color: grey !important;
   bottom: 0;
   width: 100%;
 }

@@ -27,22 +27,26 @@ exports.newProduct=handleAsyncErrors(async (req,res,next)=>{
 
 exports.getProduct=handleAsyncErrors( async (req,res, next)=>{
 
-
-    const resultPage=2;
+   // return next(new ErrorHandler("My error",404));
+    const resultPage=4;
     const productCount=await Product.countDocuments()
 
     const apiFeatures=new APIFeatures(Product.find(),req.query).search().filter().pagination(resultPage)
 
 
     const products=await apiFeatures.query;
+    setTimeout(()=>{
 
-    res.status(200).json({
+       return res.status(200).json({
 
-        success:true,
-        count:products.length,
-        productCount,
-        products
-    })
+            success:true,
+            count:products.length,
+            productCount,
+            products
+        })
+
+    },1000)
+   
 
 })
 
