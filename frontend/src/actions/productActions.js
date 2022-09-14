@@ -8,7 +8,7 @@ PRODUCT_DETAILS_SUCCESS,
 PRODUCT_DETAILS_FAIL
      } from "../constants/productConstants"
 
-export const getProducts=(currentPage)=>async (dispatch)=>{
+export const getProducts=(keyword='',currentPage)=>async (dispatch)=>{
 
     try {
 
@@ -16,7 +16,7 @@ export const getProducts=(currentPage)=>async (dispatch)=>{
             type: ALL_PRODUCT_REQUEST
         })
 
-        const {data}=await axios.get(`/api/v1/products?page=${currentPage}`)
+        const {data}=await axios.get(`/api/v1/products?keyword=${keyword}&page=${currentPage}`)
 
         dispatch({
             type: ALL_PRODUCT_SUCCESS,
