@@ -28,10 +28,10 @@ exports.newProduct=handleAsyncErrors(async (req,res,next)=>{
 exports.getProduct=handleAsyncErrors( async (req,res, next)=>{
 
    // return next(new ErrorHandler("My error",404));
-    const resultPage=4;
+    const resPerPage=2;
     const productCount=await Product.countDocuments()
 
-    const apiFeatures=new APIFeatures(Product.find(),req.query).search().filter().pagination(resultPage)
+    const apiFeatures=new APIFeatures(Product.find(),req.query).search().filter().pagination(resPerPage)
 
 
     const products=await apiFeatures.query;
@@ -41,6 +41,7 @@ exports.getProduct=handleAsyncErrors( async (req,res, next)=>{
 
             success:true,
             count:products.length,
+            resPerPage,
             productCount,
             products
         })

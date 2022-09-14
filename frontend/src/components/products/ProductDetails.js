@@ -3,8 +3,10 @@ import { useDispatch,useSelector } from 'react-redux'
 import { getProductDetails,clearErrors } from '../../actions/productActions'
 import { useAlert } from 'react-alert'
 import Loader from '../layouts/Loader'
+import MetaData from '../layouts/MetaData'
 import { useParams } from 'react-router-dom';
 import {Carousel} from 'react-bootstrap'
+import '../../App.css'
 
 
 
@@ -36,6 +38,7 @@ const ProductDetails = () => {
         {loading ? <Loader /> : (
         
         <Fragment>
+            <MetaData title={product.name}/>
 
 <div className="row f-flex justify-content-around">
             <div className="col-12 col-lg-5 img-fluid" id="product_image">
@@ -138,6 +141,8 @@ const ProductDetails = () => {
         
         
        ) }
+
+
 
     </Fragment>
    
