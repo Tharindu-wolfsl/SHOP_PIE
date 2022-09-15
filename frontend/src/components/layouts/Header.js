@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 import '../../App.css'
-import {useNavigate} from 'react-router-dom'
+import {useNavigate,Link} from 'react-router-dom'
 import Search from './Search'
 
 const Header = () => {
@@ -11,8 +11,12 @@ const Header = () => {
           <nav className="navbar row">
       <div className="col-12 col-md-3">
         <div className="navbar-brand">
-          <img src="/images/logo.png"  alt=""/>
+          <Link to="/">
+            <img src="/images/logo.png"  alt=""/>
+            </Link>
         </div>
+          
+          
       </div>
 
       <div className="col-12 col-md-6 mt-2 mt-md-0">

@@ -15,9 +15,11 @@ const Search = ({history}) => {
                 
             }
             else{
+                setKeyword['']
                 history(`/`)
                 
             }
+         
     }
 
 

@@ -8,6 +8,7 @@ import ProductDetails from './components/products/ProductDetails';
 
 
 
+
 function App() {
   return (
 
@@ -16,12 +17,13 @@ function App() {
     <div className="App">
     <Header/>
     <div className="container container-fluid">
+  
       <Routes>
       <Route path="/" element={<Home/>} exact />
       <Route path="/search/:keyword" element={<Home/>} />
 
       <Route path="/products/:id" element={<ProductDetails/>} exact />
-
+      
       </Routes>
       </div>
     <Footer/>
