@@ -4,7 +4,7 @@ import Header from './components/layouts/Header'
 import Footer from './components/layouts/Footer'
 import Home from './components/Home'
 import ProductDetails from './components/products/ProductDetails';
-
+import Login from './components/users/Login';
 
 
 
@@ -22,7 +22,9 @@ function App() {
       <Route path="/" element={<Home/>} exact />
       <Route path="/search/:keyword" element={<Home/>} />
 
+
       <Route path="/products/:id" element={<ProductDetails/>} exact />
+      <Route path="/login" element={<Login/>} />
       
       </Routes>
       </div>

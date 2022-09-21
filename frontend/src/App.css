@@ -615,3 +615,56 @@ ul.CTAs a {
   font-size: 0.8rem;
   color: grey;
 }
+
+.navbar-brand a{
+  text-decoration: none;
+  color: white;
+
+}
+.mlogo{
+
+  font-weight: 700;
+  
+
+}
+
+.login{
+  display: block;
+  margin: 0 auto;
+  text-align: center;
+ 
+}
+.login .form-group{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 20px 0;
+
+}
+.login .form-group input{
+width: 200px;
+
+}
+.login a{
+  display: block;
+}
+.login .btn{
+  
+  padding: 0 !important;
+  padding: 8px 20px !important;
+  background-color: #fa9c23;
+  border: none;
+  border-radius: 5px;
+  transition: all ease-in 0.2s;
+  color: white;
+}
+
+.login .btn:hover{
+  background-color: #f8ce0b;
+  color: black;
+}
+.login form{
+  padding: 10px 20px;
+  width: 320px;
+  margin-top: 100px;
+}

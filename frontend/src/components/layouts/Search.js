@@ -12,10 +12,11 @@ const Search = ({history}) => {
             if(keyword.trim()){
 
                 history(`/search/${keyword}`)
+               
                 
             }
             else{
-                setKeyword['']
+                
                 history(`/`)
                 
             }

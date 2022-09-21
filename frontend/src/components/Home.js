@@ -20,21 +20,42 @@ const Home = () => {
   const alert=useAlert()
   const {keyword}=useParams()
   const dispatch = useDispatch()
-  const {products,loading,error,productCount,resPerPage}=useSelector(state=>state.products)
+  const {products,loading,error,productCount,resPerPage,filterProductsCount}=useSelector(state=>state.products)
   const [currentPage,setCurrentPage]=useState(1)
   const [price,setPrice]=useState([1,10000])
+  const [category,setCategory]=useState('')
+  const [rating,setRating]=useState()
+
+  const categories=[
+                'Electronics',
+                'Cameras',
+                'Laptops',
+                'Accessories',
+                'Headphones',
+                'Food',
+                'Books',
+                'Clothes/Shoes',
+                'Beauty/Health',
+                'Sports',
+                'Outdoor',
+                'Home'
+  ];
 
   useEffect(()=>{
     if(error){
-      alert.success(error)
+     
       return alert.error(error)
     }
-    dispatch(getProducts(keyword,currentPage,price))
+    dispatch(getProducts(keyword,currentPage,price,category,rating))
     
-  },[dispatch,alert,error,currentPage,keyword,price])
+  },[dispatch,alert,error,currentPage,keyword,price,category,rating])
 
   function setCurrentPageNo(pageNumber){
-    setCurrentPage(pageNumber)
+  setCurrentPage(pageNumber)
+  }
+  let count=productCount
+  if(keyword){
+    count=filterProductsCount
   }
 
   return (  
@@ -75,6 +96,44 @@ const Home = () => {
 
 
                   />
+                  <hr className='my-5'/>
+                    <h4 className='mb-3'>Categories</h4>
+                    <ul className='pl-0'>
+                      {categories.map(item=>
+                      (
+                        <li
+                      style={{cursor:'pointer',listStyleType:'none'}}  
+                        key={item}
+                        onClick={()=>setCategory(item)}
+                        >{item}</li>
+                        
+                      )
+                      )}
+                    </ul>
+                    <hr className='my-3'/>
+                    <h4 className='mb-3'>Ratings</h4>
+                    <ul className='pl-0'>
+                      {[5,4,3,2,1].map(item=>
+                      (
+                        <li
+                      style={{cursor:'pointer',listStyleType:'none'}}  
+                        key={item}
+                        onClick={()=>setRating(item)}
+                        >
+                          <div className="rating-outer">
+                            <div className="rating-inner"
+                             style={{width:`${item*20}%`}} 
+                            >
+
+                            </div>
+                          </div>
+
+                        </li>
+                        
+                      )
+                      )}
+                    </ul>  
+
                 
 
                 </div>
@@ -108,7 +167,7 @@ const Home = () => {
       }
    
       <div className="d-flex justify-content-center mt-5">
-        {resPerPage <= productCount && (
+        {resPerPage <= count && (
                 <Pagination
 
                 activePage={currentPage}

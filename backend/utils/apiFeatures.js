@@ -36,10 +36,10 @@ class APIFeatures{
         let queryStr=JSON.stringify(queryCopy)
         queryStr=queryStr.replace(/\b(gt|gte|lte|lt)\b/g,match=>`$${match}`)
    
-        console.log(queryStr)
+        // console.log(queryStr)
         this.query=this.query.find(JSON.parse(queryStr))
 
-        console.log(queryCopy)
+        // console.log(queryCopy)
         return this;
     }
     pagination(resultPage){
